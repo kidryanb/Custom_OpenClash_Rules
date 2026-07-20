@@ -24,5 +24,12 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git remote add upstream https://github.com/Aethersailor/Custom_OpenClash_Rules.git
           git fetch upstream main
+          before_merge="$(git rev-parse HEAD)"
           git merge --no-edit upstream/main
+          if [ "$before_merge" != "$(git rev-parse HEAD)" ]; then
+            git restore --source="$before_merge" --staged --worktree .github/workflows
+            if ! git diff --cached --quiet; then
+              git commit --amend --no-edit
+            fi
+          fi
           git push origin main
