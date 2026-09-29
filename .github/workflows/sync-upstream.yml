@@ -28,12 +28,39 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git remote add upstream https://github.com/Aethersailor/Custom_OpenClash_Rules.git
           git fetch upstream main
+
           before_merge="$(git rev-parse HEAD)"
-          git merge --no-edit upstream/main
-          if [ "$before_merge" != "$(git rev-parse HEAD)" ]; then
-            git restore --source="$before_merge" --staged --worktree .github/workflows
-            if ! git diff --cached --quiet; then
-              git commit --amend --no-edit
-            fi
+
+          # These paths are maintained by this fork. Restore them before the
+          # merge commit is created so conflicts here cannot stop the sync.
+          protected_paths=(
+            ".github/workflows"
+            ".gitmodules"
+            "cfg/Custom_Clash.ini"
+            "cfg/Custom_Clash_Mainland.ini"
+            "cfg/yaml/OpenClash_Overwrite"
+            "overwrite/OpenClash_Overwrite"
+          )
+
+          if ! git merge --no-commit --no-ff upstream/main; then
+            # A conflicted merge has MERGE_HEAD. Any other merge error is fatal.
+            git rev-parse --verify -q MERGE_HEAD >/dev/null || exit 1
           fi
-          git push origin main
+
+          git restore --source="$before_merge" --staged --worktree -- "${protected_paths[@]}"
+
+          unresolved="$(git diff --name-only --diff-filter=U)"
+          if [ -n "$unresolved" ]; then
+            echo "::error::Upstream merge has conflicts outside fork-maintained paths:"
+            printf '%s\n' "$unresolved"
+            git merge --abort
+            exit 1
+          fi
+
+          if git rev-parse --verify -q MERGE_HEAD >/dev/null; then
+            git commit --no-edit
+          else
+            echo "Already up to date."
+          fi
+
+          git push origin HEAD:main
