@@ -8,6 +8,7 @@
 # ImmortalWrt 相关
 DOMAIN-SUFFIX,immortalwrt.org
 #DOMAIN-SUFFIX,kyarucloud.moe
+DOMAIN-SUFFIX,r2s.site
 
 # Tailscale
 DOMAIN-SUFFIX,tailscale.com
@@ -346,6 +347,18 @@ DOMAIN-SUFFIX,ahlt10010.com
 # 以下是准备向 GeoSite 上游仓库提交 PR 的国内冷门域名，收录后会注释对应内容
 # ---------------------------------------
 # 以下域名待提交 PR
+# 锦州公交 / add by Telegram user: alonginwind / Date: 2026-10-05 08:48:19
+DOMAIN-SUFFIX,jzgj.com
+# add by Rule-Bot Client / Date: 2026-10-02 21:40:57
+DOMAIN-SUFFIX,maxdo.tech
+# 大童保险 / add by Telegram user: MystraGood / Date: 2026-10-01 20:23:45
+DOMAIN-SUFFIX,dtinsure.com
+# add by Telegram user: Cyboot / Date: 2026-10-01 19:49:41
+DOMAIN-SUFFIX,4942.cc
+# add by Rule-Bot Client / Date: 2026-10-01 13:11:54
+DOMAIN-SUFFIX,gxcould.com
+# add by Telegram user: alonginwind / Date: 2026-09-30 21:03:22
+DOMAIN-SUFFIX,hclassplatform.com
 # add by Rule-Bot Client / Date: 2026-09-29 11:17:56
 DOMAIN-SUFFIX,e0x233.com
 # add by Rule-Bot Client / Date: 2026-09-29 11:17:53
