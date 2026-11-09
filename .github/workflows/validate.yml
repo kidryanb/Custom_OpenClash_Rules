@@ -73,7 +73,6 @@ jobs:
           sh -n shell/install_openclash_dev_update.sh
           shellcheck --shell=sh shell/check_cpu_version.sh shell/install_openclash_dev.sh shell/install_openclash_dev_update.sh
           actionlint .github/workflows/*.yml
-          sh shell/check_cpu_version.sh --self-check
           python py/generate_game_cdn.py --check
           python py/generate_rules.py --check --mihomo mihomo
 

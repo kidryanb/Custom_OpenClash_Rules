@@ -1,1 +1,25 @@
-payload: []
+# 主机联机规则（由 cfg/Custom_Clash.ini 引用到 🎮 游戏联机）
+# 位置：在“游戏下载”之后、“平台商店 / GEOIP,cn / 非标端口”之前，因此游戏下载仍走游戏下载组。
+#
+# 1. 主机来源 IP（最关键）
+#    主机联机的 P2P 流量是 UDP 直连对端 IP、端口随机，没有域名可匹配，
+#    不按来源 IP 匹配就会落到“🔀 非标端口 → 🐟 漏网之鱼”。
+#    请在路由器里给主机设置静态 DHCP，然后把下面的示例改成主机的局域网 IP 并取消注释。
+#    注意：这会让主机的全部流量（下载除外）都走 🎮 游戏联机。
+#
+# 2. 联机服务域名
+#    覆盖认证、匹配、NAT 检测等服务，避免这些域名被 GEOSITE 的平台商店规则抢走。
+
+payload:
+  # 主机来源 IP（按实际修改后取消注释）
+  # - SRC-IP-CIDR,192.168.1.100/32  # Switch
+  # - SRC-IP-CIDR,192.168.1.101/32  # PS5
+  # - SRC-IP-CIDR,192.168.1.102/32  # Xbox
+
+  # Nintendo Switch Online：账号认证、匹配、NAT 检测、游戏服务器
+  - DOMAIN-SUFFIX,srv.nintendo.net
+  - DOMAIN-SUFFIX,baas.nintendo.com
+  # PlayStation Network：游戏下载 dl.playstation.net 已在前面的下载规则中命中
+  - DOMAIN-SUFFIX,np.playstation.net
+  # Xbox Live：游戏下载 assets/xvcf 已在前面的下载规则中命中
+  - DOMAIN-SUFFIX,xboxlive.com
